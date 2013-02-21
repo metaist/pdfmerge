@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="pdfmerge" default="all">
+  <property name="project.package" value="pdfmerge" />
+
+  <!-- Executables -->
+  <condition property="bin.ext" value=".bat" else="">
+    <os family="windows" />
+  </condition>
+
+  <property name="bin.nose" value="nosetests" />
+  <property name="bin.pep8" value="pep8" />
+  <property name="bin.pip" value="pip" />
+  <property name="bin.pylint" value="pylint${bin.ext}" />
+  <property name="bin.python" value="python" />
+
+  <!-- Files / Directories -->
+  <fileset id="files.python" dir="." includes="**/*.py" />
+
+  <!-- Targets -->
+  <target name="all" depends="clean,resolve,test,dist"
+    description="clean, test, and build the system" />
+
+  <!-- Cleaning -->
+  <target name="clean" description="remove generated files">
+    <delete verbose="true" quiet="true" failonerror="false"
+            includeemptydirs="true">
+      <fileset dir="." includes="**/*.pyc" defaultexcludes="false" />
+      <fileset dir="." includes="**/*.*~" defaultexcludes="false" />
+      <fileset dir="." includes="MANIFEST" />
+      <fileset dir="." includes="dist/" />
+    </delete>
+  </target>
+
+  <!-- Dependencies -->
+  <target name="resolve" description="download dependencies">
+    <exec executable="${bin.pip}">
+      <arg value="install" />
+      <arg value="-r"/>
+      <arg value="requirements.txt"/>
+      <arg value="--use-mirrors"/>
+    </exec>
+  </target>
+
+  <!-- Testing -->
+  <target name="test" depends="test-nose,test-pep8,test-pylint"
+          description="run unit and static tests" />
+
+  <target name="test-nose" description="run unit tests">
+    <exec executable="${bin.nose}" failonerror="true">
+      <arg value="--with-doctest" />
+      <arg value="--with-coverage"/>
+      <arg value="--cover-package=${project.package}"/>
+    </exec>
+  </target>
+
+  <target name="test-pep8" description="run pep8">
+    <apply executable="${bin.pep8}" failonerror="true">
+      <fileset refid="files.python" />
+    </apply>
+  </target>
+
+  <target name="test-pylint" description="run pylint">
+    <exec executable="${bin.pylint}" failonerror="true">
+      <arg value="${project.package}" />
+      <arg value="--rcfile=.pylint.ini" />
+    </exec>
+  </target>
+
+  <!-- Distribution -->
+  <target name="dist" description="build a distributable tarball">
+    <exec executable="${bin.python}">
+      <arg value="setup.py" />
+      <arg value="sdist" />
+    </exec>
+  </target>
+</project>
