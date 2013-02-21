@@ -139,7 +139,7 @@ def add(path, writer=None, rules=RULE_DEFAULT):
                 _, _, _, rotate = match.groups()
                 for page in rangify(match, reader.getNumPages()):
                     writer.addPage(
-                        reader.getPage(page - 1)\
+                        reader.getPage(page - 1)
                               .rotateClockwise(RULE_ROTATE[rotate])
                     )
     return writer
