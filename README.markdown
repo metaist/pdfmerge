@@ -14,6 +14,12 @@ Optionally, test the package using `ant`:
 
     $ ant test
 
+Install `pdfmerge` as a `python` library:
+
+    $ python setup.py install
+
+Alternatively, you can just use the `pdfmerge.py` wherever you want.
+
 ## Questions, Comments, and Issues
 Use the [Issues tab to let us know](github-issues).
 
@@ -67,7 +73,7 @@ directory.
   * You must specify at least one file.
   * You may specifying the same file multiple times.
   * Wildcards are okay (e.g., `file*.pdf`).
-  * If you specify a directory, all of the pdfs in that directory will be
+  * If you specify a directory, all of the PDFs in that directory will be
     included (i.e. equivalent to appending `*.pdf` to the path).
 
 ### Use index-like notation to choose page ranges.
@@ -103,10 +109,11 @@ rotate the range by 90, 180, and 270 degrees clockwise.
   * When using the `<` and `>` rotators, surround the entire string
     with quotes to avoid conflicts with the command-line's use of
     those operators.
-  * You cannot specify more than one rotator.
-    <small>(Why would you want that?)</small>
   * The rotator is case-sensitive (i.e. it's a capital `V`).
+  * You cannot specify more than one rotator. (Why would you want that?)
   * The rotator comes right after the range (e.g., `[1>,2..3]` not `[1>..3]`).
+  * You can still specify a rotator if there's no range (e.g., `[<]` is the
+    same as `[1..<]`).
 
 ## Python Module Usage
 `pdfmerge` can also be imported into python scripts.
