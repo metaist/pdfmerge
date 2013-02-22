@@ -157,7 +157,7 @@ def merge(paths, output):  # pragma: no cover
         writer.write(stream)
 
 
-def main():    # pragma: no cover
+def main(args=None):    # pragma: no cover
     """Main entry point."""
     parser = argparse.ArgumentParser(description=__doc__, prog='pdfmerge')
     parser.add_argument('--version', action='version',
@@ -166,7 +166,7 @@ def main():    # pragma: no cover
                         help='PDF files to merge')
     parser.add_argument('-o', '--output', metavar='FILE', default='output.pdf',
                         help='output file (default: "%(default)s")')
-    opts = parser.parse_args()  # command-line args parsed
+    opts = parser.parse_args(args)  # command-line args parsed
     merge(opts.paths, opts.output)  # paths merged
 
 

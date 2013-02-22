@@ -2,4 +2,6 @@ language: python
 python:
   - "2.7"
 install: ant -e resolve
-script: ant -e test
+script:
+  - ant -e test
+  - python setup.py install

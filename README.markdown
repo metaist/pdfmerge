@@ -2,8 +2,16 @@
 `pdfmerge` is a command-line utility for manipulating PDF files.
 
 ## Getting Started
-Clone the repository via `git clone git://github.com/metaist/pdfmerge.git`
-or get [the latest code](https://github.com/metaist/pdfmerge/zipball/master).
+### Fast & Easy
+
+The fastest way to get started is to use `pip`:
+
+    $ pip install pymerge
+
+### Manual
+If you want to play around with the code, clone the repository via
+`git clone git://github.com/metaist/pdfmerge.git` or get
+[the latest code](https://github.com/metaist/pdfmerge/zipball/master).
 
 Install the dependencies (specifically [pyPdf][pypdf]) using `ant` or `pip`:
 
@@ -18,7 +26,7 @@ Install `pdfmerge` as a `python` library:
 
     $ python setup.py install
 
-Alternatively, you can just use the `pdfmerge.py` wherever you want.
+Alternatively, you can just copy and use `pdfmerge.py`.
 
 ## Questions, Comments, and Issues
 Use the [Issues tab to let us know](github-issues).
