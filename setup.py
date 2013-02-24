@@ -4,7 +4,8 @@
 from distutils import util
 from distutils.core import setup
 
-import py2exe
+if util.get_platform()[:3] == 'win':
+    import py2exe
 
 import pdfmerge
 
