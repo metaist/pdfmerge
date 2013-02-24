@@ -19,7 +19,7 @@ __email__ = 'metaist@metaist.com'
 __license__ = 'MIT'
 __maintainer__ = 'The Metaist'
 __status__ = 'Prototype'
-__version_info__ = ('0', '0', '1')
+__version_info__ = ('0', '0', '2')
 __version__ = '.'.join(__version_info__)
 
 ERROR_PATH = 'ERROR: path not found: {0}'
@@ -47,6 +47,8 @@ def rangify(rule, range_max=None):
         (list). List of pages to extract.
 
     Examples:
+        >>> rangify('', 3)
+        [1, 2, 3]
         >>> rangify('1')
         [1]
         >>> rangify('1..3')
@@ -60,6 +62,7 @@ def rangify(rule, range_max=None):
         >>> rangify(RE_RULE.search('5..7'), 3)
         [3]
     """
+    # pylint: disable=R0912
     result, match = [], None
     if type(rule) is str:
         match = RE_RULE.search(rule)
@@ -71,7 +74,11 @@ def rangify(rule, range_max=None):
     beg, isrange, end, _ = match.groups()
     isrange = (isrange == RULE_RANGE)
 
-    beg = (beg and int(beg)) or (isrange and 1)
+    if (not beg and not end):
+        assert range_max is not None, ERROR_BOUNDS.format(beg)
+        beg, isrange, end = 1, True, range_max
+
+    beg = (beg and int(beg)) or 1
     end = (end and int(end))
 
     if beg:
