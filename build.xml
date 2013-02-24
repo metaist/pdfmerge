@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="pdfmerge" default="all">
-  <property name="project.package" value="pdfmerge" />
+  <property name="project.package" value="${ant.project.name}" />
+  <condition property="os.win">
+    <os family="windows" />
+  </condition>
 
   <!-- Executables -->
   <condition property="bin.ext" value=".bat" else="">
     <os family="windows" />
   </condition>
 
+  <property name="bin.inno" value="iscc" />
   <property name="bin.nose" value="nosetests" />
   <property name="bin.pep8" value="pep8" />
   <property name="bin.pip" value="pip" />
@@ -17,7 +21,7 @@
   <fileset id="files.python" dir="." includes="**/*.py" />
 
   <!-- Targets -->
-  <target name="all" depends="clean,resolve,test,dist"
+  <target name="all" depends="clean,resolve,test,build"
     description="clean, test, and build the system" />
 
   <!-- Cleaning -->
@@ -43,10 +47,10 @@
   </target>
 
   <!-- Testing -->
-  <target name="test" depends="test-nose,test-pep8,test-pylint"
+  <target name="test" depends="nose,pep8,pylint"
           description="run unit and static tests" />
 
-  <target name="test-nose" description="run unit tests">
+  <target name="nose" description="run unit tests using nosetests">
     <exec executable="${bin.nose}" failonerror="true">
       <arg value="--with-doctest" />
       <arg value="--with-coverage"/>
@@ -54,24 +58,53 @@
     </exec>
   </target>
 
-  <target name="test-pep8" description="run pep8">
+  <target name="pep8" description="run pep8 static checker">
     <apply executable="${bin.pep8}" failonerror="true">
       <fileset refid="files.python" />
     </apply>
   </target>
 
-  <target name="test-pylint" description="run pylint">
+  <target name="pylint" description="run pylint static checker">
     <exec executable="${bin.pylint}" failonerror="true">
       <arg value="${project.package}" />
       <arg value="--rcfile=.pylint.ini" />
     </exec>
   </target>
 
-  <!-- Distribution -->
-  <target name="dist" description="build a distributable tarball">
+  <!-- Build -->
+  <target name="build" description="build a release">
     <exec executable="${bin.python}">
       <arg value="setup.py" />
       <arg value="sdist" />
     </exec>
   </target>
+
+  <target name="win" depends="py2exe,inno" if="os.win"
+          description="build a Windows executable and installer"></target>
+
+  <target name="py2exe" if="os.win"
+          description="build a Windows executable">
+    <exec executable="${bin.python}">
+      <arg value="setup.py" />
+      <arg value="py2exe" />
+    </exec>
+  </target>
+
+  <target name="inno" depends="py2exe" if="os.win"
+          description="build a Windows installer using Inno Setup">
+    <exec executable="${bin.inno}">
+      <arg value="installer\${project.package}.iss" />
+    </exec>
+  </target>
+
+  <!-- Distribution -->
+  <target name="pypi" description="push release to PyPI">
+    <exec executable="${bin.python}">
+      <arg value="setup.py" />
+      <arg value="register" />
+      <arg value="sdist" />
+      <arg value="upload" />
+    </exec>
+  </target>
+
 </project>
