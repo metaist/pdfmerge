@@ -4,6 +4,8 @@
 from distutils import util
 from distutils.core import setup
 
+import py2exe
+
 import pdfmerge
 
 
@@ -26,6 +28,7 @@ setup(
     long_description=pdfmerge.__doc__,
     py_modules=['pdfmerge'],
     requires='pyPdf',
+    console=['pdfmerge.py'],
     scripts=check_scripts(['scripts/pdfmerge']),
     keywords='pdf merge',
     license=pdfmerge.__license__,
