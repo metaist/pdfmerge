@@ -2,5 +2,4 @@ language: python
 python:
   - "2.7"
 install: ant -e resolve
-script:
-  - ant -e test install
+script: ant -e test install
