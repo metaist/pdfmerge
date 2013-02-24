@@ -98,6 +98,13 @@
   </target>
 
   <!-- Distribution -->
+  <target name="install" description="install the library">
+    <exec executable="${bin.python}">
+      <arg value="setup.py" />
+      <arg value="install" />
+    </exec>
+  </target>
+
   <target name="pypi" description="push release to PyPI">
     <exec executable="${bin.python}">
       <arg value="setup.py" />
