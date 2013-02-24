@@ -166,7 +166,8 @@ def merge(paths, output):  # pragma: no cover
 
 def main(args=None):    # pragma: no cover
     """Main entry point."""
-    parser = argparse.ArgumentParser(description=__doc__, prog='pdfmerge')
+    parser = argparse.ArgumentParser(description=__doc__, prog='pdfmerge',
+                                     fromfile_prefix_chars='@')
     parser.add_argument('--version', action='version',
                         version='%(prog)s ' + __version__)
     parser.add_argument('paths', metavar='PATH', nargs='+',
