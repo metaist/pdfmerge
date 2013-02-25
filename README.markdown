@@ -1,17 +1,23 @@
 # pdfmerge [![Build Status][ci-image]][ci-status]
 `pdfmerge` is a command-line utility for manipulating PDF files.
 
-## Getting Started
-### Fast & Easy
+## Questions & Issues
+If no one [has mentioned it before][gh-issues-all], [let us know][gh-issues].
 
-The fastest way to get started is to use `pip`:
+## Getting Started
+### Install
+The fastest way to install `pdfmerge` started is to use `pip`:
 
     $ pip install pymerge
 
-### Manual
-If you want to play around with the code, clone the repository via
-`git clone git://github.com/metaist/pdfmerge.git` or get
-[the latest code](https://github.com/metaist/pdfmerge/zipball/master).
+On Windows, you can use the [Windows installer][gh-setup] if you don't
+have `python`.
+
+### Contribute
+If you want to play around with [the latest code][gh-code], start by cloning
+the repository:
+
+    $ git clone git://github.com/metaist/pdfmerge.git
 
 Install the dependencies (specifically [pyPdf][pypdf]) using `ant` or `pip`:
 
@@ -26,14 +32,11 @@ Install `pdfmerge` as a `python` library:
 
     $ python setup.py install
 
-Alternatively, you can just copy and use `pdfmerge.py`.
-
-## Questions, Comments, and Issues
-Use the [Issues tab to let us know](github-issues).
+All of the magic happens in [pdfmerge.py][gh-pdfmerge].
 
 ## Usage
 
-    $ pdfmerge.py [-h] [--version] [-o FILE|--output FILE] PATH[RULE[, RULE ...]] [PATH[RULE, ...]] ...]
+    $ pdfmerge [-h] [--version] [-o FILE|--output FILE] PATH[RULE[, RULE ...]] [PATH[RULE, ...]] ...]
 
   * `-o`, `--output` output file (default: `output.pdf`).
     **Must not be any of the input files.**
@@ -50,7 +53,7 @@ Use the [Issues tab to let us know](github-issues).
 
 ## Command-line Example
 
-    $ pdfmerge.py -o out.pdf file1.pdf file2.pdf[3, 3] file2.pdf[1V,2..-1] "other*.pdf[<]" "/path/pdf[1..4>,5]"
+    $ pdfmerge -o out.pdf file1.pdf file2.pdf[3,3] file2.pdf[1V,2..-1] "other*.pdf[<]" "/path/pdf[1..4>,5]"
 
 This example illustrates several features:
   * specifying an output file (must not be any of the input files)
@@ -64,7 +67,7 @@ This example illustrates several features:
 ### Choose an output file.
 _Optional_. Specify a path to write the result of the merge.
 
-    $ pdfmerge.py -o merged.py file1.py file2.py
+    $ pdfmerge -o merged.py file1.py file2.py
 
   * **The output file must not be any of the input files.**
   * By default, the output file is `output.pdf`.
@@ -74,9 +77,9 @@ _Optional_. Specify a path to write the result of the merge.
 _Required_. Specify one or more file `PATH`s using wildcards or point to a
 directory.
 
-    $ pdfmerge.py file1.pdf file2.pdf file1.pdf
-    $ pdfmerge.py file*.pdf
-    $ pdfmerge.py /path/pdf
+    $ pdfmerge file1.pdf file2.pdf file1.pdf
+    $ pdfmerge file*.pdf
+    $ pdfmerge /path/pdf
 
   * You must specify at least one file.
   * You may specifying the same file multiple times.
@@ -88,16 +91,17 @@ directory.
 _Optional_. After each `PATH`, specify which parts of the file should be
 spliced.
 
-    $ pdfmerge.py file1.pdf[1] file2.pdf[2]
-    $ pdfmerge.py file.pdf[2, 1, 3]
-    $ pdfmerge.py file.pdf[1..3, 7..10]
-    $ pdfmerge.py file.pdf[3..1]
-    $ pdfmerge.py file.pdf[1, 4..]
-    $ pdfmerge.py file*.pdf[7]
+    $ pdfmerge file1.pdf[1] file2.pdf[2]
+    $ pdfmerge file*.pdf[7]
+    $ pdfmerge file.pdf[3..1]
+    $ pdfmerge "file.pdf[1..3, 7..10]"
+    $ pdfmerge "file.pdf[2, 1, 3]"
+    $ pdfmerge "file.pdf[1, 4..]"
 
   * If indicies are omitted, all pages are included.
   * Use commas to separate multiple ranges.
-  * Whitespace is ignored (e.g., `[1 .. 2, 3]` is the same as `[1..2,3]`).
+  * Whitespace is ignored (e.g., `[1 .. 2, 3]` is the same as `[1..2,3]`), but
+    remember to enclose parameters with whitespace.
   * **Indicies start at 1** (1-based), but negative indicies are okay
     (i.e. the first page is `1`, not `0`; `-1` is the penultimate page).
   * Reverse ranges are okay (e.g., `[2..1]` is the reverse of `[1..2]`).
@@ -109,10 +113,10 @@ spliced.
 _Optional_. After each range, use a rotator (`>`, `V`, and `<`) to
 rotate the range by 90, 180, and 270 degrees clockwise.
 
-    $ pdfmerge.py "file.pdf[1..3>]"
-    $ pdfmerge.py "file.pdf[1<]"
-    $ pdfmerge.py file.pdf[1..2, 4V]
-    $ pdfmerge.py "*.pdf[>]"
+    $ pdfmerge "file.pdf[1..3>]"
+    $ pdfmerge "file.pdf[1<]"
+    $ pdfmerge file.pdf[1..2, 4V]
+    $ pdfmerge "*.pdf[>]"
 
   * When using the `<` and `>` rotators, surround the entire string
     with quotes to avoid conflicts with the command-line's use of
@@ -122,6 +126,18 @@ rotate the range by 90, 180, and 270 degrees clockwise.
   * The rotator comes right after the range (e.g., `[1>,2..3]` not `[1>..3]`).
   * You can still specify a rotator if there's no range (e.g., `[<]` is the
     same as `[1..<]`).
+
+### Specify options in an external file.
+_Optional._ You can specify some or all of the options to `pdfmerge` using an
+external file. For example, if you have a file `opts.txt`:
+
+    -o myoutput.pdf
+    file.pdf[1,3..5>]
+    file.pdf[2<]
+
+You can provide it on the command line with a special `@` prefix:
+
+    $ pdfmerge @opts.txt
 
 ## Python Module Usage
 `pdfmerge` can also be imported into python scripts.
@@ -134,6 +150,10 @@ Licensed under the [MIT License][osi-mit].
 
 [ci-image]: https://secure.travis-ci.org/metaist/pdfmerge.png
 [ci-status]: http://travis-ci.org/metaist/pdfmerge
-[github-issues]: https://github.com/metaist/pdfmerge/issues
+[gh-code]: https://github.com/metaist/pdfmerge/zipball/master
+[gh-issues]: https://github.com/metaist/pdfmerge/issues
+[gh-issues-all]: https://github.com/metaist/pdfmerge/issues/search?q=
+[gh-pdfmerge]: https://github.com/metaist/pdfmerge/blob/master/pdfmerge.py
+[gh-setup]: https://github.com/metaist/pdfmerge/blob/master/releases/pdfmerge-latest-setup.exe
 [osi-mit]: http://opensource.org/licenses/MIT
 [pypdf]: https://pypi.python.org/pypi/pyPdf
