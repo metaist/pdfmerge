@@ -1,19 +1,20 @@
 ; Installer for pdfmerge
 
 #define appName "pdfmerge"
-#define appVersion "0.0.2"
+#define Version() ParseVersion("..\dist\pdfmerge.exe", Local[0], Local[1], Local[2], Local[3]), str(Local[0]) + "." + str(Local[1]) + "." + str(Local[2])
+#define appVersion Version()
 
 [Setup]
 AppId=com.metaist.pdfmerge
 AppName={#appName}
-AppVersion=0.0.2
+AppVersion={#appVersion}
 DefaultDirName={pf}\Metaist\pdfmerge
 DefaultGroupName=Metaist\pdfmerge
 ChangesEnvironment=true
 
 Compression=lzma
 SolidCompression=yes
-OutputDir=..\releases
+OutputDir=.
 OutputBaseFilename={#appName}-{#appVersion}-setup
 
 AppPublisher=Metaist

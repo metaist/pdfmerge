@@ -19,8 +19,8 @@ __email__ = 'metaist@metaist.com'
 __license__ = 'MIT'
 __maintainer__ = 'The Metaist'
 __status__ = 'Prototype'
-__version_info__ = ('0', '0', '2')
-__version__ = '.'.join(__version_info__)
+__version__ = open('VERSION').read().strip()
+__version_info__ = tuple(__version__.split('.'))
 
 ERROR_PATH = 'ERROR: path not found: {0}'
 ERROR_RULE = 'ERROR: invalid rule: {0}'
