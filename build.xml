@@ -38,7 +38,7 @@
 
   <!-- Dependencies -->
   <target name="resolve" description="download dependencies">
-    <exec executable="${bin.pip}">
+    <exec executable="${bin.pip}" failonerror="true">
       <arg value="install" />
       <arg value="-r"/>
       <arg value="requirements.txt"/>
@@ -73,7 +73,7 @@
 
   <!-- Build -->
   <target name="build" description="build a release">
-    <exec executable="${bin.python}">
+    <exec executable="${bin.python}" failonerror="true">
       <arg value="setup.py" />
       <arg value="sdist" />
     </exec>
@@ -84,34 +84,33 @@
 
   <target name="py2exe" if="os.win"
           description="build a Windows executable">
-    <exec executable="${bin.python}">
+    <exec executable="${bin.python}" failonerror="true">
       <arg value="setup.py" />
       <arg value="py2exe" />
     </exec>
   </target>
 
-  <target name="inno" depends="py2exe" if="os.win"
+  <target name="inno" if="os.win"
           description="build a Windows installer using Inno Setup">
-    <exec executable="${bin.inno}">
+    <exec executable="${bin.inno}" failonerror="true">
       <arg value="installer\${project.package}.iss" />
     </exec>
   </target>
 
   <!-- Distribution -->
   <target name="install" description="install the library">
-    <exec executable="${bin.python}">
+    <exec executable="${bin.python}" failonerror="true">
       <arg value="setup.py" />
       <arg value="install" />
     </exec>
   </target>
 
   <target name="pypi" description="push release to PyPI">
-    <exec executable="${bin.python}">
+    <exec executable="${bin.python}" failonerror="true">
       <arg value="setup.py" />
       <arg value="register" />
       <arg value="sdist" />
       <arg value="upload" />
     </exec>
   </target>
-
 </project>
