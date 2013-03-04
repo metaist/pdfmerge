@@ -19,7 +19,7 @@ __email__ = 'metaist@metaist.com'
 __license__ = 'MIT'
 __maintainer__ = 'The Metaist'
 __status__ = 'Prototype'
-__version__ = open('VERSION').read().strip()
+__version__ = '0.0.3'
 __version_info__ = tuple(__version__.split('.'))
 
 ERROR_PATH = 'ERROR: path not found: {0}'
