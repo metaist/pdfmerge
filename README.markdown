@@ -103,7 +103,7 @@ spliced.
   * Whitespace is ignored (e.g., `[1 .. 2, 3]` is the same as `[1..2,3]`), but
     remember to enclose parameters with whitespace.
   * **Indicies start at 1** (1-based), but negative indicies are okay
-    (i.e. the first page is `1`, not `0`; `-1` is the penultimate page).
+    (i.e. the first page is `1`, not `0`; `-1` is the last page).
   * Reverse ranges are okay (e.g., `[2..1]` is the reverse of `[1..2]`).
   * Open-ended ranges are okay (e.g., `[2..]` and `[..3]`).
   * Ranges outside of bounds are _quietly_ forced into bounds

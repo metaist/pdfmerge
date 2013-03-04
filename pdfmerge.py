@@ -58,7 +58,7 @@ def rangify(rule, range_max=None):
         >>> rangify('1..', 5) == rangify('..', 5) == rangify('..5')
         True
         >>> rangify('-3..-1', 5)
-        [2, 3, 4]
+        [3, 4, 5]
         >>> rangify(RE_RULE.search('5..7'), 3)
         [3]
     """
@@ -84,14 +84,14 @@ def rangify(rule, range_max=None):
     if beg:
         beg = int(beg)
         if range_max and beg < 1:
-            beg += range_max
+            beg += range_max + 1
         elif range_max and beg > range_max:
             beg = range_max
 
     if end:
         end = int(end)
         if range_max and end < 1:
-            end += range_max
+            end += range_max + 1
         elif range_max and end > range_max:
             end = range_max
     elif isrange:
