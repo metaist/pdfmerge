@@ -25,7 +25,7 @@ OPTS = {
     'description': pdfmerge.__doc__.split('\n')[0],
     'long_description': pdfmerge.__doc__,
     'py_modules': ['pdfmerge'],
-    'requires': 'pyPdf',
+    'install_requires': ['pyPdf'],
     'scripts': check_scripts(['scripts/pdfmerge']),
     'keywords': 'pdf merge',
     'license': pdfmerge.__license__,
