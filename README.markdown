@@ -8,7 +8,7 @@ If no one [has mentioned it before][gh-issues-all], [let us know][gh-issues].
 ### Install
 The fastest way to install `pdfmerge` started is to use `pip`:
 
-    $ pip install pymerge
+    $ pip install pdfmerge
 
 On Windows, you can use the [Windows installer][gh-setup] if you don't
 have `python`.
