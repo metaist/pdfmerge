@@ -148,7 +148,7 @@ You can provide it on the command line with a special `@` prefix:
 ## License
 Licensed under the [MIT License][osi-mit].
 
-[ci-image]: https://secure.travis-ci.org/metaist/pdfmerge.png
+[ci-image]: https://travis-ci.org/metaist/pdfmerge.png?branch=master
 [ci-status]: http://travis-ci.org/metaist/pdfmerge
 [gh-code]: https://github.com/metaist/pdfmerge/zipball/master
 [gh-issues]: https://github.com/metaist/pdfmerge/issues
