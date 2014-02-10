@@ -1,34 +1,50 @@
 #!/usr/bin/python
 # coding: utf-8
 
-from distutils import util
-from distutils.core import setup
+'''pdfmerge setup file'''
 
+# Native
+from setuptools import setup
+import sys
+
+# Package
 import pdfmerge
 
+IS_WINDOWS = sys.platform.startswith('win')
 
-def check_scripts(scripts):
-    """Add Windows scripts when needed."""
-    result = scripts
-    if util.get_platform()[:3] == 'win':
-        result += [script + '.bat' for script in scripts]
-    return result
+
+def get_deps(path):
+    '''Parse requirements file.'''
+    deps = []
+    for line in open(path):
+        line = line.strip()
+        if not line or line.startswith('#'):
+            continue
+        deps.append(line)
+    return deps
 
 
 OPTS = {
     'name': 'pdfmerge',
-    'version': pdfmerge.__version__.replace('pre', ''),
-    'author': pdfmerge.__author__,
-    'author_email': pdfmerge.__email__,
-    'url': 'https://github.com/metaist/pdfmerge',
-    'download_url': 'https://github.com/metaist/pdfmerge',
     'description': pdfmerge.__doc__.split('\n')[0],
     'long_description': pdfmerge.__doc__,
+
+    'version': pdfmerge.__version__.replace('pre', ''),
     'py_modules': ['pdfmerge'],
-    'install_requires': ['pyPdf'],
-    'scripts': check_scripts(['scripts/pdfmerge']),
-    'keywords': 'pdf merge',
+    'provides': ['pdfmerge'],
+
+    'install_requires': get_deps('requirements.txt'),
+    'scripts': ['scripts/pdfmerge'],
+    'entry_points': {'console_scripts': ['pdfmerge = pdfmerge:main']},
+
+    'author': pdfmerge.__author__,
+    'author_email': pdfmerge.__email__,
     'license': pdfmerge.__license__,
+
+    'url': 'https://github.com/metaist/pdfmerge',
+    'download_url': 'https://github.com/metaist/pdfmerge',
+
+    'keywords': 'pdf merge split',
     'classifiers': [
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -40,9 +56,19 @@ OPTS = {
     ]
 }
 
+if sys.version_info >= (3,):
+    OPTS['use_2to3'] = True
 
-if util.get_platform()[:3] == 'win':
-    import py2exe
-    OPTS['console'] = ['pdfmerge.py']
+if IS_WINDOWS:
+    OPTS['scripts'] += [s + '.bat' for s in OPTS['scripts']]
+
+    try:
+        import py2exe
+        OPTS['console'] = ['pdfmerge.py']
+    except ImportError:
+        print '''
+NOTE: If you want to build a Windows executable, you need to download and
+install py2exe from http://sourceforge.net/projects/py2exe/files/py2exe/0.6.9/
+'''
 
 setup(**OPTS)

@@ -14,7 +14,8 @@
   <property name="bin.nose" value="nosetests" />
   <property name="bin.pep8" value="pep8" />
   <property name="bin.pip" value="pip" />
-  <property name="bin.pylint" value="pylint${bin.ext}" />
+  <!--property name="bin.pylint" value="pylint${bin.ext}" /-->
+  <property name="bin.pylint" value="pylint" />
   <property name="bin.python" value="python" />
 
   <!-- Files / Directories -->
