@@ -74,7 +74,7 @@ def rangify(rule, range_max=None):
     beg, isrange, end, _ = match.groups()
     isrange = (isrange == RULE_RANGE)
 
-    if (not beg and not end):
+    if not beg and not end:
         assert range_max is not None, ERROR_BOUNDS.format(beg)
         beg, isrange, end = 1, True, range_max
 
