@@ -44,6 +44,8 @@
       <arg value="-r"/>
       <arg value="requirements.txt"/>
       <arg value="--allow-all-external"/>
+      <arg value="--allow-unverified"/>
+      <arg value="pyPDF"/>
     </exec>
   </target>
 
