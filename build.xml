@@ -43,7 +43,7 @@
       <arg value="install" />
       <arg value="-r"/>
       <arg value="requirements.txt"/>
-      <arg value="--use-mirrors"/>
+      <arg value="--allow-all-external"/>
     </exec>
   </target>
 
