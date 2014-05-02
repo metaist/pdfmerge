@@ -24,8 +24,6 @@ class TestMerge(unittest.TestCase):
         self.assertTrue(writer is not None)
         self.assertTrue(3, writer.getNumPages())
 
-        #writer = pdfmerge.add(TEST_PDF_DIR)
-
     def test_rule(self):
         """Merge part of a PDF."""
         writer = pdfmerge.add(TEST_PDF_2 + '[2]')
