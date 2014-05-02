@@ -19,7 +19,7 @@ __email__ = 'metaist@metaist.com'
 __license__ = 'MIT'
 __maintainer__ = 'The Metaist'
 __status__ = 'Prototype'
-__version__ = '0.0.5'
+__version__ = '0.0.6'
 __version_info__ = tuple(__version__.split('.'))
 
 ERROR_PATH = 'ERROR: path not found: {0}'
@@ -146,8 +146,9 @@ def add(path, writer=None, rules=RULE_DEFAULT):
                 _, _, _, rotate = match.groups()
                 for page in rangify(match, reader.getNumPages()):
                     writer.addPage(
-                        reader.getPage(page - 1)
-                              .rotateClockwise(RULE_ROTATE[rotate])
+                        reader.getPage(page - 1).rotateClockwise(
+                            RULE_ROTATE[rotate]
+                        )
                     )
     return writer
 
