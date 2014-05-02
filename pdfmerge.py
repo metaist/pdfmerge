@@ -11,15 +11,15 @@ import argparse
 import os
 import re
 
-from pyPdf import PdfFileWriter, PdfFileReader
+from PyPDF2 import PdfFileWriter, PdfFileReader
 
 __author__ = 'The Metaist'
-__copyright__ = 'Copyright 2013, Metaist'
+__copyright__ = 'Copyright 2014, Metaist'
 __email__ = 'metaist@metaist.com'
 __license__ = 'MIT'
 __maintainer__ = 'The Metaist'
 __status__ = 'Prototype'
-__version__ = '0.0.4'
+__version__ = '0.0.5'
 __version_info__ = tuple(__version__.split('.'))
 
 ERROR_PATH = 'ERROR: path not found: {0}'

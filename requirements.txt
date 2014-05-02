@@ -4,4 +4,4 @@ nose>=1.2.1
 pep8>=1.4.4
 # py2exe>=0.6.9 # uncomment on Windows machines
 pylint>=0.26.0
-pyPdf>=1.13
+PyPDF2>=1.21
