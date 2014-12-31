@@ -11,7 +11,6 @@ import argparse
 import os
 import re
 
-from PyPDF2 import PdfFileWriter, PdfFileReader
 
 __author__ = 'The Metaist'
 __copyright__ = 'Copyright 2014, Metaist'
@@ -140,6 +139,10 @@ def add(path, writer=None, rules=RULE_DEFAULT):
         else:  # base case; a single file
             assert os.path.isfile(path), ERROR_PATH.format(path)
             reader = PdfFileReader(file(path, 'rb'))
+            #try descrypting with the default password if encrypted
+            if reader.isEncrypted:
+                reader.decrypt("")
+
             for rule in rules.split(','):
                 match = RE_RULE.search(rule)
                 assert match, ERROR_RULE.format(rule)
@@ -180,4 +183,5 @@ def main(args=None):    # pragma: no cover
 
 
 if __name__ == '__main__':  # pragma: no cover
+    from PyPDF2 import PdfFileWriter, PdfFileReader
     main()
