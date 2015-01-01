@@ -36,10 +36,11 @@ All of the magic happens in [pdfmerge.py][gh-pdfmerge].
 
 ## Usage
 
-    $ pdfmerge [-h] [--version] [-o FILE|--output FILE] PATH[RULE[, RULE ...]] [PATH[RULE, ...]] ...]
+    $ pdfmerge [-h] [--version] [-o FILE|--output FILE] [-p PASSWORD|--password PASSWORD] PATH[RULE[, RULE ...]] [PATH[RULE, ...]] ...]
 
   * `-o`, `--output` output file (default: `output.pdf`).
     **Must not be any of the input files.**
+  * `-p`, '--password` password for encrypted files (default: empty string).
   * `PATH` a file, directory, or wildcard string (e.g., `file*.pdf`) of files
     to merge.
   * `RULE` an optional string indicating which pages to extract and rotate.

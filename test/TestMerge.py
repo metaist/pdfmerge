@@ -20,9 +20,9 @@ class TestMerge(unittest.TestCase):
 
     def test_merge_dir(self):
         """Merge all PDFs in a directory."""
-        writer = pdfmerge.add(TEST_PDF_DIR)
+        writer = pdfmerge.add(TEST_PDF_DIR, password='test')
         self.assertTrue(writer is not None)
-        self.assertTrue(3, writer.getNumPages())
+        self.assertTrue(4, writer.getNumPages())
 
     def test_rule(self):
         """Merge part of a PDF."""

@@ -112,11 +112,12 @@ def rangify(rule, range_max=None):
     return result
 
 
-def add(path, writer=None, rules=RULE_DEFAULT):
+def add(path, password='', writer=None, rules=RULE_DEFAULT):
     """Add one or more paths to a PdfFileWriter.
 
     Args:
         path (str, list):       path or list of paths to merge
+        password (str):         password for encrypted files
         writer (PdfFileWriter): output writer to add pdf files
         rules (str):            pages and rotation rules
 
@@ -128,7 +129,7 @@ def add(path, writer=None, rules=RULE_DEFAULT):
 
     if type(path) is list:  # merge all the paths
         for subpath in path:
-            writer = add(subpath, writer, rules)
+            writer = add(subpath, password, writer, rules)
     else:
         match = RE_HAS_RULE.search(path)
         if match:
@@ -139,10 +140,13 @@ def add(path, writer=None, rules=RULE_DEFAULT):
             path = os.path.join(path, '*.pdf')
 
         if '*' in path:  # merge multiple files
-            writer = add(glob(path), writer, rules)
+            writer = add(glob(path), password, writer, rules)
         else:  # base case; a single file
             assert os.path.isfile(path), ERROR_PATH.format(path)
             reader = PdfFileReader(file(path, 'rb'))
+            if reader.isEncrypted:
+                reader.decrypt(password)
+
             for rule in rules.split(','):
                 match = RE_RULE.search(rule)
                 assert match, ERROR_RULE.format(rule)
@@ -156,14 +160,15 @@ def add(path, writer=None, rules=RULE_DEFAULT):
     return writer
 
 
-def merge(paths, output):  # pragma: no cover
+def merge(paths, output, password=''):  # pragma: no cover
     """Merge the paths into a single PDF.
 
     Args:
         paths (list): list of paths to merge
         output (str): output file name
+        password (str): password for encrypted files (default: '')
     """
-    writer = add(paths)
+    writer = add(paths, password)
     with file(output, 'wb') as stream:
         writer.write(stream)
 
@@ -178,8 +183,10 @@ def main(args=None):    # pragma: no cover
                         help='PDF files to merge')
     parser.add_argument('-o', '--output', metavar='FILE', default='output.pdf',
                         help='output file (default: "%(default)s")')
+    parser.add_argument('-p', '--password', metavar='PASSWORD', default='',
+                        help='password for encrypted files (default: empty)')
     opts = parser.parse_args(args)  # command-line args parsed
-    merge(opts.paths, opts.output)  # paths merged
+    merge(opts.paths, opts.output, opts.password)  # paths merged
 
 
 if __name__ == '__main__':  # pragma: no cover
