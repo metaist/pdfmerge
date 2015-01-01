@@ -11,7 +11,10 @@ import argparse
 import os
 import re
 
-from PyPDF2 import PdfFileWriter, PdfFileReader
+try:
+    from PyPDF2 import PdfFileWriter, PdfFileReader
+except ImportError:  # probably coming from setup.py
+    pass
 
 __author__ = 'The Metaist'
 __copyright__ = 'Copyright 2014, Metaist'
