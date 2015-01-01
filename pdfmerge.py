@@ -17,12 +17,12 @@ except ImportError:  # probably coming from setup.py
     pass
 
 __author__ = 'The Metaist'
-__copyright__ = 'Copyright 2014, Metaist'
+__copyright__ = 'Copyright 2015, Metaist'
 __email__ = 'metaist@metaist.com'
 __license__ = 'MIT'
 __maintainer__ = 'The Metaist'
 __status__ = 'Prototype'
-__version__ = '0.0.6'
+__version__ = '0.0.7'
 __version_info__ = tuple(__version__.split('.'))
 
 ERROR_PATH = 'ERROR: path not found: {0}'
