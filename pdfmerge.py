@@ -67,10 +67,10 @@ def rangify(rule, range_max=None):
     """
     # pylint: disable=R0912
     result, match = [], None
-    if type(rule) is str:
+    if isinstance(rule, str):
         match = RE_RULE.search(rule)
         assert match, ERROR_RULE.format(rule)
-    elif type(rule) is RE_MATCH_TYPE:
+    elif isinstance(rule, RE_MATCH_TYPE):
         assert rule is not None, ERROR_RULE.format()
         match = rule
 
@@ -127,7 +127,7 @@ def add(path, password='', writer=None, rules=RULE_DEFAULT):
     if writer is None:
         writer = PdfFileWriter()
 
-    if type(path) is list:  # merge all the paths
+    if isinstance(path, list):  # merge all the paths
         for subpath in path:
             writer = add(subpath, password, writer, rules)
     else:
