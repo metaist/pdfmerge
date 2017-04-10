@@ -32,7 +32,7 @@ ERROR_BOUNDS = 'ERROR: missing upper bound on range [{0}..]'
 
 RE_MATCH_TYPE = type(re.match('', ''))
 RE_HAS_RULE = re.compile(r'^(.*)\[(.*)\]$')
-RE_RULE = re.compile(r'^(-?\d+)?(\.\.)?(-?\d+)?([>V<])?$')
+RE_RULE = re.compile(r'^(-?\d+)?(\.\.)?(-?\d+)?([>V<|]+)?$')
 
 RULE_RANGE = '..'
 RULE_ROTATE = {None: 0, '>': 90, 'V': 180, '<': 270}  # rotation rules
@@ -150,13 +150,17 @@ def add(path, password='', writer=None, rules=RULE_DEFAULT):
             for rule in rules.split(','):
                 match = RE_RULE.search(rule)
                 assert match, ERROR_RULE.format(rule)
-                _, _, _, rotate = match.groups()
+                _, _, _, modifiers = match.groups()
+                if modifiers is None:
+                    modifiers = ""
+                align = modifiers.count('|')
+                rotate = sum(RULE_ROTATE[a] for a in
+                             list(modifiers.translate(None, '|')))
                 for page in rangify(match, reader.getNumPages()):
                     writer.addPage(
-                        reader.getPage(page - 1).rotateClockwise(
-                            RULE_ROTATE[rotate]
-                        )
-                    )
+                        reader.getPage(page - 1).rotateClockwise(rotate))
+                for _ in xrange(writer.getNumPages() % (align + 1)):
+                    writer.addBlankPage()
     return writer
 
 
