@@ -143,7 +143,7 @@ def add(path, password='', writer=None, rules=RULE_DEFAULT):
             writer = add(glob(path), password, writer, rules)
         else:  # base case; a single file
             assert os.path.isfile(path), ERROR_PATH.format(path)
-            reader = PdfFileReader(file(path, 'rb'))
+            reader = PdfFileReader(open(path, 'rb'))
             if reader.isEncrypted:
                 reader.decrypt(password)
 
@@ -169,7 +169,7 @@ def merge(paths, output, password=''):  # pragma: no cover
         password (str): password for encrypted files (default: '')
     """
     writer = add(paths, password)
-    with file(output, 'wb') as stream:
+    with open(output, 'wb') as stream:
         writer.write(stream)
 
 
