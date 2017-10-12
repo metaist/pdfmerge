@@ -66,9 +66,9 @@ if IS_WINDOWS:
         import py2exe
         OPTS['console'] = ['pdfmerge.py']
     except ImportError:
-        print '''
+        print('''
 NOTE: If you want to build a Windows executable, you need to download and
 install py2exe from http://sourceforge.net/projects/py2exe/files/py2exe/0.6.9/
-'''
+''')
 
 setup(**OPTS)
