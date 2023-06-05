@@ -13,9 +13,36 @@ Sections order is: `Fixed`, `Changed`, `Added`, `Deprecated`, `Removed`, `Securi
 
 ## [Unreleased]
 
-[unreleased]: https://github.com/metaist/visual-schedule/compare/prod...main
+[unreleased]: https://github.com/metaist/pdfmerge/compare/prod...main
 
 These are changes that are on `main` that are not yet in `prod`.
+
+---
+
+[1.0.0]: https://github.com/metaist/pdfmerge/compare/0.0.7...1.0.0
+
+## [1.0.0] - 2023-06-05T12:03:55Z
+
+**Fixed**
+
+- [#15]: use `isinstance()` instead of `type()` (by @begert)
+- [#20]: `print` on python 3 (by @lukasbindreiter)
+
+**Changed**
+
+- [#19]: upgraded to python 3 (by @arjndr)
+- [#23]: supported python version (3.8, 3.9, 3.10, 3.11)
+- [#24]: directory structure (`src` layout, using `pyproject.toml`) and other cleanup
+
+**Added**
+
+- [#13]: prompt for password for encrypted PDFs (if not supplied on CLI)
+- [#21]: complete docs in `--help`
+
+**Removed**
+
+- [#25]: Windows-specific builds
+- `pdfmerge.add`, `pdfmerge.merge`
 
 ---
 
