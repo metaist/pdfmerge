@@ -26,7 +26,7 @@ dynamic = ["version"]
 requires-python = ">=3.8"
 dependencies = [
   # app => pinned
-  "attrbox==0.1.2",
+  "attrbox==0.1.5",
   "pypdf==3.9.0",
 ]
 optional-dependencies = { dev = [
