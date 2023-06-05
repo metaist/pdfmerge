@@ -1,0 +1,103 @@
+[build-system]
+requires = ["setuptools >= 40.8.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+pdfmerge = ["py.typed"]
+
+[tool.setuptools.dynamic]
+version = { attr = "pdfmerge.__version__" }
+
+[project.urls]
+Homepage = "https://github.com/metaist/pdfmerge"
+Documentation = "https://metaist.github.io/pdfmerge/"
+Repository = "https://github.com/metaist/pdfmerge.git"
+Changelog = "https://github.com/metaist/pdfmerge/blob/main/CHANGELOG.md"
+
+[project]
+name = "pdfmerge"
+description = "Command-line utility for merging, splicing, and rotating PDF documents."
+keywords = ["pdf", "merge", "split", "cli"]
+
+dynamic = ["version"]
+requires-python = ">=3.8"
+dependencies = [
+  # app => pinned
+  "attrbox==0.1.2",
+  "pypdf==3.9.0",
+]
+optional-dependencies = { dev = [
+  # dev => latest
+  "black",
+  "coverage",
+  "mypy",
+  "pdm",
+  "pdoc3",
+  "pytest-cov",
+  "pytest",
+  "ruff",
+] }
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Metaist LLC", email = "metaist@metaist.com" }]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: End Users/Desktop",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Utilities",
+  "Typing :: Typed",
+]
+
+[project.scripts]
+pdfmerge = "pdfmerge:main"
+
+[tool.pdm.scripts]
+black = { shell = "black ." }
+ruff = { shell = "ruff ." }
+cspell = { shell = "cspell --gitignore '**/*.{py,txt,md,markdown}'" }
+
+mypy = { shell = """\
+  mypy \
+    --strict \
+    --install-types \
+    --non-interactive \
+    src test
+""" }
+
+test = { shell = """\
+  PYTHONPATH=src \
+  coverage run --branch --source=src -m \
+    pytest \
+      --doctest-modules \
+      --doctest-ignore-import-errors \
+      src test; \
+  coverage report -m
+""" }
+
+docs = { shell = """\
+  rm -rf docs; \
+  pdoc \
+    --html \
+    --output-dir docs \
+    --config sort_identifiers=False \
+    --config show_inherited_members=True \
+    --force src/$(basename $(pwd));
+  mv docs/**/* docs/
+""" }
+
+lint = { composite = ["black", "ruff", "cspell", "mypy"] }
+dev = { composite = ["lint", "test"] }
+all = { composite = ["lint", "test", "docs"] }

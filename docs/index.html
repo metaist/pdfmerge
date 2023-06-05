@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>pdfmerge API documentation</title>
+<meta name="description" content="Command-line utility for merging, splicing, and rotating PDF documents …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Package <code>pdfmerge</code></h1>
+</header>
+<section id="section-intro">
+<p>Command-line utility for merging, splicing, and rotating PDF documents.</p>
+<p><a href="https://github.com/metaist/pdfmerge/actions"><img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/metaist/pdfmerge/.github/workflows/ci.yaml?branch=main&amp;style=for-the-badge"></a>
+<a href="https://pypi.org/project/pdfmerge"><img alt="pdfmerge on PyPI" src="https://img.shields.io/pypi/v/pdfmerge.svg?color=blue&amp;style=for-the-badge"></a>
+<a href="https://pypi.org/project/pdfmerge"><img alt="Supported Python versions" src="https://img.shields.io/pypi/pyversions/pdfmerge?style=for-the-badge"></a></p>
+<p><a href="https://github.com/metaist/pdfmerge/blob/main/CHANGELOG.md">Changelog</a> - <a href="https://github.com/metaist/pdfmerge/issues">Issues</a> - <a href="https://metaist.github.io/pdfmerge/">Documentation</a></p>
+<h2 id="why">Why?</h2>
+<p>I find myself merging bits of different PDFs fairly regularly and really wanted a simple CLI way to do it.</p>
+<h2 id="install">Install</h2>
+<pre><code class="language-bash">python -m pip install pdfmerge
+</code></pre>
+<h2 id="usage">Usage</h2>
+<pre><code>$ pdfmerge [-h] [--version] [-o FILE|--output FILE] [-p PASSWORD|--password PASSWORD] PATH[RULE[, RULE ...]] [PATH[RULE, ...]] ...]
+</code></pre>
+<ul>
+<li><code>-o</code>, <code>--output</code> output file (default: <code>output.pdf</code>).
+<strong>Must not be any of the input files.</strong></li>
+<li><code>-p</code>, '&ndash;password` password for encrypted files (default: empty string).</li>
+<li><code>PATH</code> a file, directory, or wildcard string (e.g., <code>file*.pdf</code>) of files
+to merge.</li>
+<li>
+<p><code>RULE</code> an optional string indicating which pages to extract and rotate.
+The syntax for each rule is:</p>
+<p>[START][..][END][ROTATE]</p>
+</li>
+</ul>
+<p>Where <code>START</code> and <code>END</code> are positive (1-based) or negative page numbers and
+<code>ROTATE</code> is one of <code>&gt;</code>, <code>V</code>, or <code>&lt;</code> indicating a clockwise rotation of
+90, 180, 270 degrees, respectively.</p>
+<h2 id="command-line-example">Command-line Example</h2>
+<pre><code>$ pdfmerge -o out.pdf file1.pdf file2.pdf[3,3] file2.pdf[1V,2..-1] "other*.pdf[&lt;]" "/path/pdf[1..4&gt;,5]"
+</code></pre>
+<p>This example illustrates several features:</p>
+<ul>
+<li>specifying an output file (must not be any of the input files)</li>
+<li>merging multiple files, some more than once</li>
+<li>splicing parts of file using indices (1-based; negatives allowed)</li>
+<li>including the same page multiple times</li>
+<li>rotating a page or page range</li>
+<li>merging all the PDFs in a directory</li>
+</ul>
+<p><a href="https://metaist.github.io/pdfmerge/__main__.html">Read more about the options</a></p>
+<h1 id="python-module-usage">Python Module Usage</h1>
+<p><code><a title="pdfmerge.pdfmerge" href="#pdfmerge.pdfmerge">pdfmerge()</a></code> can also be imported into python scripts.</p>
+<pre><code class="language-python">from pdfmerge import pdfmerge
+pdfmerge([&quot;pdf-1.pdf&quot;, &quot;pdf-2.pdf[2&gt;]&quot;], &quot;output.pdf&quot;)
+</code></pre>
+<h2 id="license">License</h2>
+<p><a href="https://github.com/metaist/pypdf/blob/main/LICENSE.md">MIT License</a></p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;Command-line utility for merging, splicing, and rotating PDF documents.
+
+.. include:: ../../README.md
+   :start-line: 4
+&#34;&#34;&#34;
+
+# native
+from __future__ import annotations
+from dataclasses import dataclass
+from dataclasses import field
+from getpass import getpass
+from glob import glob
+from pathlib import Path
+from typing import Any
+from typing import Generic
+from typing import List
+from typing import Optional
+from typing import Sequence
+from typing import TypeVar
+from typing import Union
+import re
+import sys
+
+# lib
+from pypdf import PdfReader
+from pypdf import PdfWriter
+
+__all__ = (&#34;__version__&#34;, &#34;pdfmerge&#34;)
+__version__ = &#34;1.0.0&#34;
+
+ERR_PATH = &#34;ERROR: path not found: {0}&#34;
+&#34;&#34;&#34;Error when a path is not found.&#34;&#34;&#34;
+
+ERR_RULE = &#34;ERROR: invalid rule: {0}&#34;
+&#34;&#34;&#34;Error when an invalid rule is encountered.&#34;&#34;&#34;
+
+ERR_RANGE = &#34;ERROR: page {0} out of range [1-{1}]&#34;
+&#34;&#34;&#34;Error when a page is outside of the available ranges.&#34;&#34;&#34;
+
+ERR_BOUNDS = &#34;ERROR: missing upper bound on range [{0}..]&#34;
+&#34;&#34;&#34;Error when the upper range is missing.&#34;&#34;&#34;
+
+# RE_MATCH_TYPE = type(re.match(&#34;&#34;, &#34;&#34;))
+RE_HAS_RULE = re.compile(r&#34;^(.*)\[(.*)\]$&#34;)
+&#34;&#34;&#34;Regex that matches when an input has a rule.&#34;&#34;&#34;
+
+RE_RULE = re.compile(r&#34;^(-?\d+)?(\.\.)?(-?\d+)?([&gt;V&lt;])?$&#34;)
+&#34;&#34;&#34;Regex that checks that the rule is valid.&#34;&#34;&#34;
+
+RULE_RANGE = &#34;..&#34;
+&#34;&#34;&#34;Range indicator.&#34;&#34;&#34;
+
+RULE_ROTATE = {None: 0, &#34;&gt;&#34;: 90, &#34;V&#34;: 180, &#34;&lt;&#34;: 270}
+&#34;&#34;&#34;Rotation rules.&#34;&#34;&#34;
+
+RULE_DEFAULT = RULE_RANGE
+&#34;&#34;&#34;Default rule is all pages, unrotated.&#34;&#34;&#34;
+
+
+T = TypeVar(&#34;T&#34;)
+&#34;&#34;&#34;Generic type.&#34;&#34;&#34;
+
+
+@dataclass
+class Parsed(Generic[T]):
+    &#34;&#34;&#34;Generic set of parsed results.&#34;&#34;&#34;
+
+    done: List[T] = field(default_factory=list)
+    &#34;&#34;&#34;Items that were parsed without error.&#34;&#34;&#34;
+
+    errors: List[str] = field(default_factory=list)
+    &#34;&#34;&#34;Errors encountered during parsing.&#34;&#34;&#34;
+
+    def __add__(self, other: Parsed[Any]) -&gt; Parsed[Any]:
+        &#34;&#34;&#34;Merge this result with another result.&#34;&#34;&#34;
+        return Parsed(self.done + other.done, self.errors + other.errors)
+
+    def __iadd__(self, other: Parsed[Any]) -&gt; Parsed[Any]:
+        &#34;&#34;&#34;Update this result  with data from another result.&#34;&#34;&#34;
+        self.done += other.done
+        self.errors += other.errors
+        return self
+
+
+@dataclass
+class ParsedPath:
+    &#34;&#34;&#34;Parsed path and its rules.&#34;&#34;&#34;
+
+    path: Path
+    &#34;&#34;&#34;Path to process.&#34;&#34;&#34;
+
+    rules: List[str] = field(default_factory=list)
+    &#34;&#34;&#34;Rules to apply.&#34;&#34;&#34;
+
+
+def rangify(
+    rule: Union[str, re.Match[str]],
+    last: int,
+) -&gt; Union[List[int], range]:
+    &#34;&#34;&#34;Convert a rule into a range.
+
+    Args:
+        rule (str, Match): pages to extract or a regex matching the rule
+        last (int): maximum number of pages
+
+    Returns:
+        Union[List[int], range]: list or `range` of pages to extract.
+
+    Examples:
+        &gt;&gt;&gt; list(rangify(&#39;&#39;, 3))
+        [1, 2, 3]
+        &gt;&gt;&gt; list(rangify(&#39;1&#39;, 10))
+        [1]
+        &gt;&gt;&gt; list(rangify(&#39;1..3&#39;, 10))
+        [1, 2, 3]
+        &gt;&gt;&gt; list(rangify(&#39;3..1&#39;, 10))
+        [3, 2, 1]
+        &gt;&gt;&gt; rangify(&#39;1..&#39;, 5) == rangify(&#39;..&#39;, 5)
+        True
+        &gt;&gt;&gt; list(rangify(&#39;-3..-1&#39;, 5))
+        [3, 4, 5]
+        &gt;&gt;&gt; list(rangify(RE_RULE.search(&#39;5..7&#39;), 3))
+        [3]
+    &#34;&#34;&#34;
+    result: Union[List[int], range]
+    match: Optional[re.Match[str]]
+
+    if isinstance(rule, str):
+        match = RE_RULE.search(rule)
+        assert match, ERR_RULE.format(rule)
+    elif isinstance(rule, re.Match):
+        assert rule is not None, ERR_RULE.format()
+        match = rule
+
+    if not match:  # pragma: no cover
+        return []
+
+    left, has_range, right, _ = match.groups()
+    is_range = has_range == RULE_RANGE
+
+    beg, end = 1, last
+    if not left and not right:  # [&#34;&#34;] =&gt; [..]
+        is_range = True
+
+    if left:
+        beg = int(left)
+        if beg &lt; 1:  # too low
+            beg += last + 1
+        elif beg &gt; last:  # too high
+            beg = last
+
+    if right:
+        end = int(right)
+        if end &lt; 1:  # too low
+            end += last + 1
+        elif end &gt; last:  # too high
+            end = last
+    elif is_range:
+        end = last
+
+    # Generate ranges:
+    if is_range and end &lt; beg:
+        result = range(beg, end - 1, -1)
+    elif is_range:
+        result = range(beg, end + 1)
+    else:
+        result = [beg]
+
+    return result
+
+
+def add_path(
+    writer: PdfWriter,
+    item: ParsedPath,
+    password: Optional[str] = None,
+) -&gt; PdfWriter:
+    &#34;&#34;&#34;Add some PDF pages to a PDF writer.
+
+    Args:
+        writer (PdfFileWriter): writer to add to.
+        item (ParsedPath): the path and rules to add.
+        password (str, optional): password for encrypted files. Defaults to `None`.
+
+    Returns:
+        PdfFileWriter: the writer object
+    &#34;&#34;&#34;
+    reader = PdfReader(item.path.open(&#34;rb&#34;))
+    if reader.is_encrypted:
+        if password is None:
+            print(f&#34;Reading encrypted PDF &lt;{item.path}&gt;&#34;)
+            password = getpass()
+        reader.decrypt(password)
+
+    for rule in item.rules:
+        match = RE_RULE.search(rule)
+        assert match, ERR_RULE.format(rule)
+
+        rotate = match.group(4)
+        for num in rangify(match, len(reader.pages)):
+            writer.add_page(reader.pages[num - 1].rotate(RULE_ROTATE[rotate]))
+
+    return writer
+
+
+def parse_paths(
+    inputs: Sequence[str],
+    _rule: Union[str, List[str]] = RULE_DEFAULT,
+) -&gt; Parsed[ParsedPath]:
+    &#34;&#34;&#34;Split inputs into `Path` and rules.
+
+    Args:
+        inputs (Sequence[str]): inputs to parse
+
+        _rule (str, optional): default rule to apply. Defaults to `RULE_DEFAULT`.
+
+    Returns:
+        Parsed:
+            - `.done`: contains a list of successfully parsed items
+                - `.path`: `Path` to the file
+                - `.rules`: list of rules to apply
+            - `.errors`: list of errors encountered
+    &#34;&#34;&#34;
+    result: Parsed[ParsedPath] = Parsed()
+
+    if isinstance(_rule, str):
+        _rule = [_rule]
+
+    for item in inputs:
+        ok = True
+        path = None
+        rules = _rule
+
+        has_rule = RE_HAS_RULE.search(item)
+        if has_rule:
+            item = has_rule.group(1)
+            rules = re.sub(r&#34;\s&#34;, &#34;&#34;, has_rule.group(2)).split(&#34;,&#34;)
+
+        for rule in rules:
+            if not RE_RULE.search(rule):
+                ok, err = False, ERR_RULE.format(rule)
+                if err not in result.errors:
+                    result.errors.append(err)
+        # rules checked
+
+        path = Path(item)
+        if path.is_dir():
+            paths = [str(p) for p in path.glob(&#34;*.pdf&#34;)]
+            return result + parse_paths(sorted(paths), rules)
+        # folder full of PDFs handled
+
+        if &#34;*&#34; in item:
+            return result + parse_paths(sorted(glob(item)), rules)
+        # glob handled
+
+        if not path.exists():
+            ok, err = False, ERR_PATH.format(path)
+            if err not in result.errors:
+                result.errors.append(err)
+        # path checked
+
+        if ok:
+            result.done.append(ParsedPath(path=path, rules=rules))
+
+    return result
+
+
+def pdfmerge(inputs: List[str], output: str, password: Optional[str] = None) -&gt; None:
+    &#34;&#34;&#34;Merge PDFs into a single PDF.
+
+    Args:
+        inputs (List[str]): list of paths to merge with optional rules
+        output (str): output file name
+        password (str, optional): password for encrypted files. Defaults to `None`.
+    &#34;&#34;&#34;
+    parsed = parse_paths(inputs)
+    if parsed.errors:
+        for err in parsed.errors:
+            print(err, file=sys.stderr)
+        return
+
+    with Path(output).open(&#34;wb&#34;) as stream:
+        with PdfWriter(stream) as writer:
+            for item in parsed.done:
+                add_path(writer, item, password)
+
+
+__pdoc__ = {&#34;pdfmerge.__main__&#34;: True}</code></pre>
+</details>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="pdfmerge.__main__" href="__main__.html">pdfmerge.__main__</a></code></dt>
+<dd>
+<div class="desc"><p>pdfmerge - Merge, splice, and rotate PDFs …</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="pdfmerge.pdfmerge"><code class="name flex">
+<span>def <span class="ident">pdfmerge</span></span>(<span>inputs: List[str], output: str, password: Optional[str] = None) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Merge PDFs into a single PDF.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>inputs</code></strong> :&ensp;<code>List[str]</code></dt>
+<dd>list of paths to merge with optional rules</dd>
+<dt><strong><code>output</code></strong> :&ensp;<code>str</code></dt>
+<dd>output file name</dd>
+<dt><strong><code>password</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>password for encrypted files. Defaults to <code>None</code>.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pdfmerge(inputs: List[str], output: str, password: Optional[str] = None) -&gt; None:
+    &#34;&#34;&#34;Merge PDFs into a single PDF.
+
+    Args:
+        inputs (List[str]): list of paths to merge with optional rules
+        output (str): output file name
+        password (str, optional): password for encrypted files. Defaults to `None`.
+    &#34;&#34;&#34;
+    parsed = parse_paths(inputs)
+    if parsed.errors:
+        for err in parsed.errors:
+            print(err, file=sys.stderr)
+        return
+
+    with Path(output).open(&#34;wb&#34;) as stream:
+        with PdfWriter(stream) as writer:
+            for item in parsed.done:
+                add_path(writer, item, password)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul>
+<li><a href="#why">Why?</a></li>
+<li><a href="#install">Install</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#command-line-example">Command-line Example</a></li>
+<li><a href="#python-module-usage">Python Module Usage</a><ul>
+<li><a href="#license">License</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="pdfmerge.__main__" href="__main__.html">pdfmerge.__main__</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="pdfmerge.pdfmerge" href="#pdfmerge.pdfmerge">pdfmerge</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,7 +1,0 @@
-#argparse>=1.2.1
-coverage>=3.6
-nose>=1.2.1
-pep8>=1.4.4
-# py2exe>=0.6.9 # uncomment on Windows machines
-pylint>=1.2.1
-PyPDF2>=1.21
