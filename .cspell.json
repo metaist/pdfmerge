@@ -2,14 +2,19 @@
   "version": "0.2",
   "language": "en",
   "words": [
+    "arjndr",
     "attrbox",
+    "begert",
     "docopt",
+    "isinstance",
     "isrange",
+    "lukasbindreiter",
     "Metaist",
     "pdfmerge",
     "pdfs",
     "pdoc",
     "pypdf",
+    "pyproject",
     "rangify",
     "unrotated"
   ]
