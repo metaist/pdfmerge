@@ -19,6 +19,19 @@ These are changes that are on `main` that are not yet in `prod`.
 
 ---
 
+[#28]: https://github.com/metaist/pdfmerge/issues/28
+[1.0.1]: https://github.com/metaist/pdfmerge/compare/1.0.0...1.0.1
+
+## [1.0.1] - 2023-07-24T19:59:45Z
+
+As a consequence of fixing [#28], the output file can now be one of the input files because we build up the result in a temporary file first.
+
+**Fixed**
+
+- [#28]: reading and writing to a network drive
+
+---
+
 [#13]: https://github.com/metaist/pdfmerge/issues/13
 [#15]: https://github.com/metaist/pdfmerge/pull/15
 [#19]: https://github.com/metaist/pdfmerge/pull/19

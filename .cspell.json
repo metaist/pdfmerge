@@ -16,6 +16,7 @@
     "pypdf",
     "pyproject",
     "rangify",
-    "unrotated"
+    "unrotated",
+    "venv"
   ]
 }

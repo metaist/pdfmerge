@@ -28,7 +28,7 @@ from pypdf import PdfReader
 from pypdf import PdfWriter
 
 __all__ = ("__version__", "pdfmerge")
-__version__ = "1.0.0-post"
+__version__ = "1.0.1"
 
 ERR_PATH = "ERROR: path not found: {0}"
 """Error when a path is not found."""
