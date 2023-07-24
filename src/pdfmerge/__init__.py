@@ -20,13 +20,15 @@ from typing import TypeVar
 from typing import Union
 import re
 import sys
+import tempfile
+import shutil
 
 # lib
 from pypdf import PdfReader
 from pypdf import PdfWriter
 
 __all__ = ("__version__", "pdfmerge")
-__version__ = "1.0.0"
+__version__ = "1.0.0-post"
 
 ERR_PATH = "ERROR: path not found: {0}"
 """Error when a path is not found."""
@@ -184,7 +186,7 @@ def add_path(
     Returns:
         PdfFileWriter: the writer object
     """
-    reader = PdfReader(item.path.open("rb"))
+    reader = PdfReader(item.path.open("rb"), strict=True)
     if reader.is_encrypted:
         if password is None:
             print(f"Reading encrypted PDF <{item.path}>")
@@ -278,10 +280,13 @@ def pdfmerge(inputs: List[str], output: str, password: Optional[str] = None) -> 
             print(err, file=sys.stderr)
         return
 
-    with Path(output).open("wb") as stream:
-        with PdfWriter(stream) as writer:
-            for item in parsed.done:
-                add_path(writer, item, password)
+    with tempfile.NamedTemporaryFile(delete=False) as temp:
+        writer = PdfWriter(temp)
+        for item in parsed.done:
+            add_path(writer, item, password)
+        writer.write_stream(temp)
+        temp.flush()
+        shutil.move(temp.name, Path(output).expanduser().resolve())
 
 
 __pdoc__ = {"pdfmerge.__main__": True}

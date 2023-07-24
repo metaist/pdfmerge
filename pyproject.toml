@@ -95,7 +95,8 @@ docs = { shell = """\
     --config sort_identifiers=False \
     --config show_inherited_members=True \
     --force src/$(basename $(pwd));
-  mv docs/**/* docs/
+  mv docs/**/* docs/;
+  touch docs/.nojekyll
 """ }
 
 lint = { composite = ["black", "ruff", "cspell", "mypy"] }

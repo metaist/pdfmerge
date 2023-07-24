@@ -19,6 +19,14 @@ These are changes that are on `main` that are not yet in `prod`.
 
 ---
 
+[#13]: https://github.com/metaist/pdfmerge/issues/13
+[#15]: https://github.com/metaist/pdfmerge/pull/15
+[#19]: https://github.com/metaist/pdfmerge/pull/19
+[#20]: https://github.com/metaist/pdfmerge/pull/20
+[#21]: https://github.com/metaist/pdfmerge/issues/21
+[#23]: https://github.com/metaist/pdfmerge/issues/23
+[#24]: https://github.com/metaist/pdfmerge/issues/24
+[#25]: https://github.com/metaist/pdfmerge/issues/25
 [1.0.0]: https://github.com/metaist/pdfmerge/compare/0.0.7...1.0.0
 
 ## [1.0.0] - 2023-06-05T12:03:55Z
