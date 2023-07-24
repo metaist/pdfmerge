@@ -12,7 +12,6 @@ Options:
   <path>                      paths to PDFs to merge
   -p PASS, --password PASS    password to decrypt PDFs
   -o FILE, --output FILE      output file [default: output.pdf]
-                              NOTE: this may not be any of the input files
 ```
 
 After each `<path>`, there are some optional rules you apply. These are written
