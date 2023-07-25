@@ -36,8 +36,7 @@
 <pre><code>$ pdfmerge [-h] [--version] [-o FILE|--output FILE] [-p PASSWORD|--password PASSWORD] PATH[RULE[, RULE ...]] [PATH[RULE, ...]] ...]
 </code></pre>
 <ul>
-<li><code>-o</code>, <code>--output</code> output file (default: <code>output.pdf</code>).
-<strong>Must not be any of the input files.</strong></li>
+<li><code>-o</code>, <code>--output</code> output file (default: <code>output.pdf</code>).</li>
 <li><code>-p</code>, '&ndash;password` password for encrypted files (default: empty string).</li>
 <li><code>PATH</code> a file, directory, or wildcard string (e.g., <code>file*.pdf</code>) of files
 to merge.</li>
@@ -96,13 +95,15 @@ from typing import TypeVar
 from typing import Union
 import re
 import sys
+import tempfile
+import shutil
 
 # lib
 from pypdf import PdfReader
 from pypdf import PdfWriter
 
 __all__ = (&#34;__version__&#34;, &#34;pdfmerge&#34;)
-__version__ = &#34;1.0.0&#34;
+__version__ = &#34;1.0.1&#34;
 
 ERR_PATH = &#34;ERROR: path not found: {0}&#34;
 &#34;&#34;&#34;Error when a path is not found.&#34;&#34;&#34;
@@ -260,7 +261,7 @@ def add_path(
     Returns:
         PdfFileWriter: the writer object
     &#34;&#34;&#34;
-    reader = PdfReader(item.path.open(&#34;rb&#34;))
+    reader = PdfReader(item.path.open(&#34;rb&#34;), strict=True)
     if reader.is_encrypted:
         if password is None:
             print(f&#34;Reading encrypted PDF &lt;{item.path}&gt;&#34;)
@@ -354,10 +355,13 @@ def pdfmerge(inputs: List[str], output: str, password: Optional[str] = None) -&g
             print(err, file=sys.stderr)
         return
 
-    with Path(output).open(&#34;wb&#34;) as stream:
-        with PdfWriter(stream) as writer:
-            for item in parsed.done:
-                add_path(writer, item, password)
+    with tempfile.NamedTemporaryFile(delete=False) as temp:
+        writer = PdfWriter(temp)
+        for item in parsed.done:
+            add_path(writer, item, password)
+        writer.write_stream(temp)
+        temp.flush()
+        shutil.move(temp.name, Path(output).expanduser().resolve())
 
 
 __pdoc__ = {&#34;pdfmerge.__main__&#34;: True}</code></pre>
@@ -409,10 +413,13 @@ __pdoc__ = {&#34;pdfmerge.__main__&#34;: True}</code></pre>
             print(err, file=sys.stderr)
         return
 
-    with Path(output).open(&#34;wb&#34;) as stream:
-        with PdfWriter(stream) as writer:
-            for item in parsed.done:
-                add_path(writer, item, password)</code></pre>
+    with tempfile.NamedTemporaryFile(delete=False) as temp:
+        writer = PdfWriter(temp)
+        for item in parsed.done:
+            add_path(writer, item, password)
+        writer.write_stream(temp)
+        temp.flush()
+        shutil.move(temp.name, Path(output).expanduser().resolve())</code></pre>
 </details>
 </dd>
 </dl>
