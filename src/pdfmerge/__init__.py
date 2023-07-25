@@ -186,7 +186,7 @@ def add_path(
     Returns:
         PdfFileWriter: the writer object
     """
-    reader = PdfReader(item.path.open("rb"), strict=True)
+    reader = PdfReader(item.path.open("rb"))
     if reader.is_encrypted:
         if password is None:
             print(f"Reading encrypted PDF <{item.path}>")
