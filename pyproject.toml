@@ -30,7 +30,7 @@ requires-python = ">=3.8"
 dependencies = [
   # app => pinned
   "attrbox==0.1.5",
-  "pypdf==3.9.0",
+  "pypdf==3.17.4",
 ]
 optional-dependencies = { dev = [
   # dev => latest
