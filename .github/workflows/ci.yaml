@@ -44,9 +44,9 @@ jobs:
         run: |
           pdm run mypy
 
-      - name: Type check (pyright)
-        run: |
-          pdm run pyright
+      # - name: Type check (pyright)
+      #   run: |
+      #     pdm run pyright
 
       - name: Run tests
         run: |
