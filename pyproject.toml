@@ -22,7 +22,7 @@ Changelog = "https://github.com/metaist/pdfmerge/blob/main/CHANGELOG.md"
 
 [project]
 name = "pdfmerge"
-description = "Command-line utility for merging, splicing, and rotating PDF documents."
+description = "CLI for merging, splicing, and rotating PDFs."
 keywords = ["pdf", "merge", "split", "cli"]
 
 dynamic = ["version"]
@@ -39,6 +39,7 @@ optional-dependencies = { dev = [
   "mypy",
   "pdm",
   "pdoc3",
+  "pyright",
   "pytest-cov",
   "pytest",
   "ruff",
@@ -69,6 +70,7 @@ classifiers = [
 black = { shell = "black ." }
 ruff = { shell = "ruff ." }
 cspell = { shell = "cspell --gitignore '**/*.{py,txt,md,markdown}'" }
+pyright = { shell = "pyright src test" }
 
 mypy = { shell = """\
   mypy \
@@ -100,6 +102,6 @@ docs = { shell = """\
   touch docs/.nojekyll
 """ }
 
-lint = { composite = ["black", "ruff", "cspell", "mypy"] }
+lint = { composite = ["black", "ruff", "cspell", "pyright", "mypy"] }
 dev = { composite = ["lint", "test"] }
 all = { composite = ["lint", "test", "docs"] }

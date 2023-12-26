@@ -1,7 +1,7 @@
 """Command-line utility for merging, splicing, and rotating PDF documents.
 
 .. include:: ../../README.md
-   :start-line: 4
+   :start-line: 2
 """
 
 # native

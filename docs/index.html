@@ -23,17 +23,25 @@
 </header>
 <section id="section-intro">
 <p>Command-line utility for merging, splicing, and rotating PDF documents.</p>
-<p><a href="https://github.com/metaist/pdfmerge/actions"><img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/metaist/pdfmerge/.github/workflows/ci.yaml?branch=main&amp;style=for-the-badge"></a>
-<a href="https://pypi.org/project/pdfmerge"><img alt="pdfmerge on PyPI" src="https://img.shields.io/pypi/v/pdfmerge.svg?color=blue&amp;style=for-the-badge"></a>
-<a href="https://pypi.org/project/pdfmerge"><img alt="Supported Python versions" src="https://img.shields.io/pypi/pyversions/pdfmerge?style=for-the-badge"></a></p>
-<p><a href="https://github.com/metaist/pdfmerge/blob/main/CHANGELOG.md">Changelog</a> - <a href="https://github.com/metaist/pdfmerge/issues">Issues</a> - <a href="https://metaist.github.io/pdfmerge/">Documentation</a></p>
+<p align="center">
+<a href="https://metaist.github.io/pdfmerge/"><img alt="pdfmerge" width="200" src="https://raw.githubusercontent.com/metaist/pdfmerge/main/staple-the-squirrel.png" /></a><br />
+<em>Staple the Squirrel</em>
+</p>
+<p align="center">
+<a href="https://github.com/metaist/pdfmerge/actions/workflows/ci.yaml"><img alt="Build" src="https://img.shields.io/github/actions/workflow/status/metaist/pdfmerge/.github/workflows/ci.yaml?branch=main&logo=github"/></a>
+<a href="https://pypi.org/project/pdfmerge"><img alt="PyPI" src="https://img.shields.io/pypi/v/pdfmerge.svg?color=blue" /></a>
+<a href="https://pypi.org/project/pdfmerge"><img alt="Supported Python Versions" src="https://img.shields.io/pypi/pyversions/pdfmerge" /></a>
+</p>
 <h2 id="why">Why?</h2>
 <p>I find myself merging bits of different PDFs fairly regularly and really wanted a simple CLI way to do it.</p>
 <h2 id="install">Install</h2>
 <pre><code class="language-bash">python -m pip install pdfmerge
 </code></pre>
 <h2 id="usage">Usage</h2>
-<pre><code>$ pdfmerge [-h] [--version] [-o FILE|--output FILE] [-p PASSWORD|--password PASSWORD] PATH[RULE[, RULE ...]] [PATH[RULE, ...]] ...]
+<pre><code>$ pdfmerge [-h] [--version]
+  [-o FILE|--output FILE]
+  [-p PASSWORD|--password PASSWORD]
+  PATH[RULE[, RULE ...]] [[PATH[RULE, ...]] ...]
 </code></pre>
 <ul>
 <li><code>-o</code>, <code>--output</code> output file (default: <code>output.pdf</code>).</li>
@@ -54,7 +62,7 @@ The syntax for each rule is:</p>
 </code></pre>
 <p>This example illustrates several features:</p>
 <ul>
-<li>specifying an output file (must not be any of the input files)</li>
+<li>specifying an output file</li>
 <li>merging multiple files, some more than once</li>
 <li>splicing parts of file using indices (1-based; negatives allowed)</li>
 <li>including the same page multiple times</li>
@@ -68,7 +76,7 @@ The syntax for each rule is:</p>
 pdfmerge([&quot;pdf-1.pdf&quot;, &quot;pdf-2.pdf[2&gt;]&quot;], &quot;output.pdf&quot;)
 </code></pre>
 <h2 id="license">License</h2>
-<p><a href="https://github.com/metaist/pypdf/blob/main/LICENSE.md">MIT License</a></p>
+<p><a href="https://github.com/metaist/pdfmerge/blob/main/LICENSE.md">MIT License</a></p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -76,7 +84,7 @@ pdfmerge([&quot;pdf-1.pdf&quot;, &quot;pdf-2.pdf[2&gt;]&quot;], &quot;output.pdf
 <pre><code class="python">&#34;&#34;&#34;Command-line utility for merging, splicing, and rotating PDF documents.
 
 .. include:: ../../README.md
-   :start-line: 4
+   :start-line: 2
 &#34;&#34;&#34;
 
 # native
@@ -261,7 +269,7 @@ def add_path(
     Returns:
         PdfFileWriter: the writer object
     &#34;&#34;&#34;
-    reader = PdfReader(item.path.open(&#34;rb&#34;), strict=True)
+    reader = PdfReader(item.path.open(&#34;rb&#34;))
     if reader.is_encrypted:
         if password is None:
             print(f&#34;Reading encrypted PDF &lt;{item.path}&gt;&#34;)

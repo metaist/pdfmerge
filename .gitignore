@@ -17,7 +17,7 @@ _seed.py
 __pycache__
 
 # test
-.coverage*
+.coverage
 .mypy_cache
 .pytest_cache
 .ruff_cache

@@ -1,16 +1,14 @@
-# pdfmerge
+# pdfmerge: CLI for merging, splicing, and rotating PDFs
 
-_Command-line utility for merging, splicing, and rotating PDF documents._
-
-[![Build Status](https://img.shields.io/github/actions/workflow/status/metaist/pdfmerge/.github/workflows/ci.yaml?branch=main&style=for-the-badge)](https://github.com/metaist/pdfmerge/actions)
-[![pdfmerge on PyPI](https://img.shields.io/pypi/v/pdfmerge.svg?color=blue&style=for-the-badge)](https://pypi.org/project/pdfmerge)
-[![Supported Python versions](https://img.shields.io/pypi/pyversions/pdfmerge?style=for-the-badge)](https://pypi.org/project/pdfmerge)
-
-[Changelog] - [Issues] - [Documentation]
-
-[changelog]: https://github.com/metaist/pdfmerge/blob/main/CHANGELOG.md
-[issues]: https://github.com/metaist/pdfmerge/issues
-[documentation]: https://metaist.github.io/pdfmerge/
+<p align="center">
+  <a href="https://metaist.github.io/pdfmerge/"><img alt="pdfmerge" width="200" src="https://raw.githubusercontent.com/metaist/pdfmerge/main/staple-the-squirrel.png" /></a><br />
+  <em>Staple the Squirrel</em>
+</p>
+<p align="center">
+  <a href="https://github.com/metaist/pdfmerge/actions/workflows/ci.yaml"><img alt="Build" src="https://img.shields.io/github/actions/workflow/status/metaist/pdfmerge/.github/workflows/ci.yaml?branch=main&logo=github"/></a>
+  <a href="https://pypi.org/project/pdfmerge"><img alt="PyPI" src="https://img.shields.io/pypi/v/pdfmerge.svg?color=blue" /></a>
+  <a href="https://pypi.org/project/pdfmerge"><img alt="Supported Python Versions" src="https://img.shields.io/pypi/pyversions/pdfmerge" /></a>
+</p>
 
 ## Why?
 
@@ -24,7 +22,10 @@ python -m pip install pdfmerge
 
 ## Usage
 
-    $ pdfmerge [-h] [--version] [-o FILE|--output FILE] [-p PASSWORD|--password PASSWORD] PATH[RULE[, RULE ...]] [PATH[RULE, ...]] ...]
+    $ pdfmerge [-h] [--version]
+      [-o FILE|--output FILE]
+      [-p PASSWORD|--password PASSWORD]
+      PATH[RULE[, RULE ...]] [[PATH[RULE, ...]] ...]
 
 - `-o`, `--output` output file (default: `output.pdf`).
 - `-p`, '--password` password for encrypted files (default: empty string).
@@ -45,7 +46,7 @@ python -m pip install pdfmerge
 
 This example illustrates several features:
 
-- specifying an output file (must not be any of the input files)
+- specifying an output file
 - merging multiple files, some more than once
 - splicing parts of file using indices (1-based; negatives allowed)
 - including the same page multiple times
@@ -65,14 +66,4 @@ pdfmerge(["pdf-1.pdf", "pdf-2.pdf[2>]"], "output.pdf")
 
 ## License
 
-[MIT License](https://github.com/metaist/pypdf/blob/main/LICENSE.md)
-
-[ci-image]: https://travis-ci.org/metaist/pdfmerge.png?branch=master
-[ci-status]: http://travis-ci.org/metaist/pdfmerge
-[gh-code]: https://github.com/metaist/pdfmerge/zipball/master
-[gh-issues]: https://github.com/metaist/pdfmerge/issues
-[gh-issues-all]: https://github.com/metaist/pdfmerge/issues/search?q=
-[gh-pdfmerge]: https://github.com/metaist/pdfmerge/blob/master/pdfmerge.py
-[gh-setup]: https://github.com/metaist/pdfmerge/blob/master/releases/pdfmerge-latest-setup.exe
-[osi-mit]: http://opensource.org/licenses/MIT
-[pypdf]: https://pypi.python.org/pypi/pyPdf
+[MIT License](https://github.com/metaist/pdfmerge/blob/main/LICENSE.md)
