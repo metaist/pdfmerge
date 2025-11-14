@@ -62,6 +62,7 @@ After each range, use a rotator (`>`, `V`, and `<`) to rotate the range by
 - You can still specify a rotator if there's no range (e.g., `[<]` is the
   same as `[1..<]`).
 """
+
 # native
 from typing import cast
 from typing import List
@@ -78,7 +79,7 @@ from . import pdfmerge
 
 def main(argv: Optional[Sequence[str]] = None) -> None:  # pragma: no cover
     """Main entry point."""
-    args = parse_docopt(__doc__, argv, version=__version__)
+    args = parse_docopt(__doc__ or "", argv, version=__version__)
     pdfmerge(
         cast(List[str], args.path),
         cast(str, args.output),

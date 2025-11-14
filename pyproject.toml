@@ -1,18 +1,6 @@
 [build-system]
-requires = ["setuptools >= 40.8.0", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools.packages.find]
-where = ["src"]
-
-[tool.setuptools.package-data]
-pdfmerge = ["py.typed"]
-
-[project.scripts]
-pdfmerge = "pdfmerge.__main__:main"
-
-[tool.setuptools.dynamic]
-version = { attr = "pdfmerge.__version__" }
+requires = ["uv_build>=0.9.9,<0.10.0"]
+build-backend = "uv_build"
 
 [project.urls]
 Homepage = "https://github.com/metaist/pdfmerge"
@@ -22,11 +10,16 @@ Changelog = "https://github.com/metaist/pdfmerge/blob/main/CHANGELOG.md"
 
 [project]
 name = "pdfmerge"
+version = "1.0.1"
+
+authors = [{ name = "Metaist LLC", email = "metaist@metaist.com" }]
 description = "CLI for merging, splicing, and rotating PDFs."
 keywords = ["pdf", "merge", "split", "cli"]
 
-dynamic = ["version"]
-requires-python = ">=3.8"
+license = "MIT"
+readme = "README.md"
+
+scripts = { pdfmerge = "pdfmerge.__main__:main" }
 dependencies = [
   # app => pinned
   "attrbox==0.1.6",
@@ -34,19 +27,19 @@ dependencies = [
 ]
 optional-dependencies = { dev = [
   # dev => latest
-  "black",
+  "cogapp",
   "coverage",
+  "ds-run",
   "mypy",
-  "pdm",
   "pdoc3",
   "pyright",
   "pytest-cov",
   "pytest",
   "ruff",
+  "ty",
 ] }
-readme = "README.md"
-license = { text = "MIT" }
-authors = [{ name = "Metaist LLC", email = "metaist@metaist.com" }]
+
+requires-python = ">=3.10,<=3.14"
 classifiers = [
   "Development Status :: 4 - Beta",
   "Environment :: Console",
@@ -57,42 +50,73 @@ classifiers = [
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Topic :: Utilities",
   "Typing :: Typed",
 ]
 
-[tool.pdm.scripts]
-black = { shell = "black ." }
-ruff = { shell = "ruff ." }
-cspell = { shell = "cspell --gitignore '**/*.{py,txt,md,markdown}'" }
-pyright = { shell = "pyright src test" }
+[tool.ds.scripts] # run dev scripts <https://github.com/metaist/ds>
+# Build
+setup = "uv sync --all-extras --dev"
+build = "uv build"
+clean = """
+  rm -rf .mypy_cache;
+  rm -rf .pytest_cache;
+  rm -rf .ruff_cache;
+  rm -rf dist;
+  rm -rf htmlcov;
+  rm -rf src/*.egg-info
+  rm -rf .coverage;
+"""
 
-mypy = { shell = """\
+# Lint
+lint = ["ruff-*", "+cspell"]
+ruff-format = "ruff format ${@:-.}"
+ruff-lint = "ruff check --fix ${@:-.}"
+cspell = "npx cspell lint --unique --gitignore --exclude '**/_vendor/**' '**/*.{py,txt,md,markdown}' "
+
+# Type Check
+types = ["ty", "pyright", "mypy"]
+ty = "ty check ${@:-.}"
+pyright = "npx pyright src test"
+mypy = """
   mypy \
     --strict \
     --install-types \
     --non-interactive \
+    --follow-imports=skip \
+    --exclude '/_vendor/' \
     src test
-""" }
+"""
 
-test = { shell = """\
-  PYTHONPATH=src \
+# Test
+test.help = "run unit tests"
+test.env = { PYTHONPATH = "src" }
+test.shell = """
   coverage run --branch --source=src -m \
     pytest \
       --doctest-modules \
       --doctest-ignore-import-errors \
-      src test; \
-  coverage report -m
-""" }
+      "--ignore-glob=*/_vendor/*" \
+      $@ src test;
+  coverage report --omit=src/cog_helpers.py --omit '*/_vendor/*' -m
+"""
 
-docs = { shell = """\
-  rm -rf docs; \
-  pdoc \
+coverage-report = "coverage html"
+coverage-serve = { shell = "uv run -m http.server 8080", cwd = "htmlcov" }
+coverage = ["coverage-*"]
+
+# Documentation
+docs = ["cog", "pdoc"]
+cog = "cog -r README.md"
+pdoc = """
+  rm -rf docs;
+  mkdir -p docs;
+  pdoc3 \
     --html \
     --output-dir docs \
     --config sort_identifiers=False \
@@ -100,8 +124,38 @@ docs = { shell = """\
     --force src/$(basename $(pwd));
   mv docs/**/* docs/;
   touch docs/.nojekyll
-""" }
+"""
 
-lint = { composite = ["black", "ruff", "cspell", "pyright", "mypy"] }
-dev = { composite = ["lint", "test"] }
-all = { composite = ["lint", "test", "docs"] }
+# Common
+dev.help = "lint, type-check, and unit tests"
+dev.composite = ["lint", "types", "test"]
+
+dev-all.help = "check every supported python version"
+dev-all.shell = """
+  ds lint;
+  versions=($(sed -n 's/.*Python :: \\([0-9][0-9]*\\.[0-9][0-9]*\\)",*/\\1/p' pyproject.toml));
+  for v in ${versions[@]};
+  do
+    uv run --isolated --all-extras --python $v -- ds types test;
+    echo;
+  done;
+"""
+
+# Release
+recent.help = "see commits since last tag"
+recent.shell = "git log --oneline --color $(git describe --tags --abbrev=0)..HEAD"
+recent-closed = ["recent | rg 'closes #'"]
+
+release.help = "commit & tag the release"
+release.shell = """
+  git commit -am "release: $1";
+  git tag $1;
+  git push;
+  git push --tags;
+  git checkout main;
+  git merge --no-ff --no-edit prod;
+  git push;
+
+  awk 'BEGIN {count=0} /---/ {count++} count==2 && !/---/ {print} count==3 {exit}' \
+  CHANGELOG.md | gh release create $1 dist/* --draft --verify-tag --title $1 --notes-file -
+"""
